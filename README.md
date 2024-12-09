@@ -1,6 +1,8 @@
 # TPSAS R package 
 
-R Package for twopiece sinh arcsinh distributions
+R Package for twopiece sinh arcsinh distributions:
+
+> Rubio, F. J., Ogundimu, E. O., & Hutton, J. L. (2016). On modelling asymmetric data using two-piece sinh–arcsinh distributions. Brazilian Journal of Probability and Statistics, 485-501. https://doi.org/10.1214/15-BJPS290
 
 To install this package, use
 
