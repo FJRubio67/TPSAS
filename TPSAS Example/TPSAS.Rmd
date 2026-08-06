@@ -1,0 +1,49 @@
+---
+title: "TPSAS Package"
+author: "[F Javier Rubio](https://sites.google.com/site/fjavierrubio67/) and Emmanuel Ogundimu"
+date: "25/06/2017"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## TPSAS R package
+
+The [TPSAS R package](https://sites.google.com/site/fjavierrubio67/resources) implements the univariate [two-piece sinh–arcsinh distribution](http://projecteuclid.org/euclid.bjps/1469807223), which contains two shape parameters that separately control skewness and kurtosis. This distribution can capture higher levels of asymmetry than the [original sinh–arcsinh distribution](https://doi.org/10.1093/biomet/asp053), in terms of some asymmetry measures, while keeping flexibility of the tails and tractability.
+
+**References.**
+
+1. [On modelling asymmetric data using two-piece sinh-arcsinh distributions](http://projecteuclid.org/euclid.bjps/1469807223)
+
+**Example: Data fitting.**
+
+```{r}
+rm(list=ls())
+#Required packages
+library(TPSAS)
+
+#Simulated data
+set.seed(123)
+data = rtpsas(10000,10,1,0.5,0.75)
+############################################################################################
+# TP SAS Fit
+############################################################################################
+# Log-likelihood
+ll = function(par){
+  if(par[2]>0 & abs(par[3])<1 & par[4]>0){
+    return( - sum(dtpsas(data,par[1],par[2],par[3],par[4],param="eps",log=T)))
+  }
+  else return(Inf)
+}
+OPT = optim(c(10,1,0.5,0.75),ll, control = list(maxit=50000),method = c("Nelder-Mead"))
+MLE = OPT$par
+
+# fitted TPSAS density
+fit.den = Vectorize(function(x) dtpsas(x,MLE[1],MLE[2],MLE[3],MLE[4],param="eps"))
+hist(data,breaks=50,probability=T,ylim=c(0,0.45),cex.axis=1.5,cex.lab=1.5)
+curve(fit.den,3,13,lwd=2,col="red",add=T,n=1000)
+box()
+```
+
