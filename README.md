@@ -23,8 +23,8 @@ behaviour, making it well suited for modelling skewed continuous data.
 ## Installation
 
 ```r
-# install.packages("devtools")
-devtools::install_github("FJRubio67/TPSAS")
+# install.packages("pak")
+pak::pak("FJRubio67/TPSAS")
 library(TPSAS)
 ```
 
